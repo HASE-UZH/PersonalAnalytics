@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Globalization;
-using WindowsActivityTracker.Helpers;
+using ActivityMapper;
 using WindowsActivityTracker.Models;
 
 namespace WindowsActivityTracker.Data

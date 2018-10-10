@@ -7,9 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using WindowsActivityTracker.Models;
 
-namespace WindowsActivityTracker.Helpers
+namespace ActivityMapper
 {
     /// <summary>
     /// This helper class is used to map a program to an activity
@@ -22,22 +21,22 @@ namespace WindowsActivityTracker.Helpers
         private static readonly List<string> EditorApps = new List<string> { "notepad", "xmlspy", "sublime", "emacs", "vim", "atom", "texteditor", "editplus", "gedit", "textpad" };
         private static readonly List<string> EditorNotEnoughInfoList = new List<string> { "go to...", "find", "untitled - notepad", "save", "speichern unter", "speichern", "suche", "replace", "ersetzen", "*new", "open", "reload", "new", "save as", "untitled", "no name", "plugin manager" }; // from notepad++
 
-        private static readonly List<string> CodingApps = new List<string> { "rstudio", "sdv", "webplatforminstaller", "xts", "build", "cleardescribe", "clearfindco", "alm-client", "ildasm", "ssms", "mintty", "xming", "clearprojexp", "clearmrgman", "kitty", "bc2", "bcompare", "mobaxterm", "webmatrix", "mexplore", "linqpad", "android sdk manager", "windows phone application deployment", "ilspy", "tortoiseproc", "xsd", "eclipse", "fiddler", "xamarin", "netbeans", "intellij", "sql", "sqlitebrowser", "devenv", "visual studio", "code", "vs_enterprise", "vs2013", "microsoftazuretools", "webstorm", "phpstorm", "source insight", "zend", "console", "powershell", "shell", "cmd", "tasktop", "android studio", "ide", "filezilla", "flashfxp", "charles" };
+        private static readonly List<string> CodingApps = new List<string> { "rstudio", "sdv", "webplatforminstaller", "xts", "build", "cleardescribe", "clearfindco", "alm-client", "ildasm", "ssms", "mintty", "xming", "clearprojexp", "clearmrgman", "kitty", "bc2", "bcompare", "mobaxterm", "webmatrix", "mexplore", "linqpad", "android sdk manager", "windows phone application deployment", "ilspy", "tortoiseproc", "xsd", "eclipse", "fiddler", "xamarin", "netbeans", "intellij", "sql", "sqlitebrowser", "devenv", "visual studio", "code", "vs_enterprise", "vs2013", "microsoftazuretools", "webstorm", "phpstorm", "source insight", "zend", "console", "powershell", "shell", "cmd", "tasktop", "android studio", "ide", "filezilla", "flashfxp", "charles", "delphi32", "modelbrowser", "ibq", "pyscripter" };
         private static readonly List<string> CodeFileTypes = new List<string> { "src", ".proj", ".cmd", ".ps1", ".ini", ".ts", ".err", ".sql", ".ksh", ".dat", ".xaml", ".rb", ".kml", ".log", ".bat", ".cs", ".vb", ".py", ".xml", ".dtd", ".xs", ".h", ".cpp", ".java", ".class", ".js", ".asp", ".aspx", ".nuspec", ".css", ".html", ".htm", ".psm1", ".view", ".script", ".ccproj", "js", ".php", ".xhtml", ".sh", ".sln", ".vcxproj", ".pl", ".gitignore", ".exe", ".config" };
-        private static readonly List<string> CodingDebugAppsAndKeywords = new List<string> { "vshost", "xde", "javaw", "debug", "bugger", "windbg", "perfview", "cdb", "msmunittest", "bug" }; // works for visual studio, eclipse (if view changes)
+        private static readonly List<string> CodingDebugAppsAndKeywords = new List<string> { "vshost", "xde", "javaw", "debug", "bugger", "windbg", "perfview", "cdb", "msmunittest", "bug", "snoop" }; // works for visual studio, eclipse (if view changes)
         private static readonly List<string> CodingReviewApps = new List<string> { "codeflow", "gerrit", "stash", "kallithea", "code review", "rhodecode", "rietveld", "crucible", "phabricator" };
-        private static readonly List<string> CodingVersionControlApps = new List<string> { "diff", "repository", "cleardiffbl", "cleardlg", "cleardiffmrg", "clearhistory", "clearvtree", "sourcetree", "svn", "tortoiseproc", "scm", "tfs", "push", "pull", "commit", "git", "bitbucket", "visual studio online" };
+        private static readonly List<string> CodingVersionControlApps = new List<string> { "diff", "repository", "cleardiffbl", "cleardlg", "cleardiffmrg", "clearhistory", "clearvtree", "sourcetree", "svn", "tortoiseproc", "scm", "tfs", "push", "pull", "commit", "git", "bitbucket", "visual studio online", "thgw", "thg" };
 
         private static readonly List<string> EmailAppsAndKeywords = new List<string> { "mail", "outlook", "thunderbird", "outlook.com" }; // incudes gmail, yahoo mail, mac mail, outlook.com
         private static readonly List<string> PlanningAppsAndKeywords = new List<string> { "backlog", "winproj", "trello", "wunderlist", "todoist", "personalanalytics", "time tracking", "track time", "rescuetime", "clearquest", "scrum", "kanban", "codealike", "jira", "rally", "versionone", "calendar", "kalender", "sprint", "user story", "plan", "to-do", "todo", "task", "aufgabe", "vorgangsliste", "work item" };
-        private static readonly List<string> ReadingWritingAppsAndKeywords = new List<string> { "aether", "insight3", "snagiteditor", "confluence", "picasa", "quora", "windows photo viewer", "visio", "flashmedialiveencoder", "photofiltre", "jmp", "treepad", "winword", "word", "leo", "translate", "übersetzer", "wordpress", "mspub", ".doc", ".xls", ".ppt", ".pub", "excel", "powerpnt", "onenote", "evernote", "acrord", "sharepoint", "pdf", "foxitreader", "adobe reader", "reader", "glcnd", "wiki", "keep", "google docs", "yammer", "docs", "office", "paint", "gimp", "photoshop", "lightroom", "miktex", "texmaker", "latex", "texstudio", "latech studio", "photo", "foto" }; //not "note" as notepad is more coding
-        private static readonly List<string> InstantMessagingAppsAndKeywords = new List<string> { "slack", "skype", "lync", "wechat", "sip", "g2mlauncher", "ciscowebexstart", "nbrplay", "g2mui", "chatter", "atmgr", "hangout", "viber", "messaging", "whatsapp", "messenger" }; // includes skype for business
+        private static readonly List<string> ReadingWritingAppsAndKeywords = new List<string> { "aether", "insight3", "snagiteditor", "confluence", "picasa", "quora", "windows photo viewer", "visio", "flashmedialiveencoder", "photofiltre", "jmp", "treepad", "winword", "word", "leo", "translate", "übersetzer", "wordpress", "mspub", ".doc", ".xls", ".ppt", ".pub", "excel", "powerpnt", "onenote", "evernote", "acrord", "sharepoint", "pdf", "foxitreader", "adobe reader", "reader", "glcnd", "wiki", "keep", "google docs", "yammer", "docs", "office", "paint", "gimp", "photoshop", "lightroom", "miktex", "texmaker", "latex", "texstudio", "latech studio", "photo", "foto", "picpick", "greenshot" }; //not "note" as notepad is more coding
+        private static readonly List<string> InstantMessagingAppsAndKeywords = new List<string> { "slack", "skype", "lync", "wechat", "sip", "g2mlauncher", "ciscowebexstart", "nbrplay", "g2mui", "chatter", "atmgr", "hangout", "viber", "messaging", "whatsapp", "messenger", "ctimon" }; // includes skype for business
 
         private static readonly List<string> BrowserApps = new List<string> { "iexplore", "chrome", "firefox", "opera", "safari", "applicationframehost", "edge" }; // ApplicationFrameHost stands for Edge
         private static readonly List<string> WorkUnrelatedBrowsingKeywords = new List<string> { "yelp", "instagram", "verge", "season", "food", "vincere", "agar.io", "gopro", "saldo", "halo", "book", "party", "swag", "birthday", "therapy", "vacation", "wohnung", "flat", "airbnb", "money", "hotel", "mietwagen", "rental", "credit", "hockeybuzz.com", "empatica", "wallpaper", "flight", "travel", "store", "phone", "buy", "engadget", "motorcycle", "car", "auto", "honda", "bmw", "nissan", "subaru", "winter", "summer", "bike", "bicycle", "arcgis", "finance", "portfolio", "toy", "gadget", "geek", "wellness", "health", "saturday", "sunday", "weekend", "sushi", "eat", "dessert", "restaurant", "holiday", "hotel", "cafe", "gas", "deal", "shop", "shopping", "craigslist", "vancouver", "indoor", "club", "loan", "maps", "flower", "florist", "valentine", "zalando", "tripadvisor", "golem", "tilllate", "heise", "jedipedia", "blick", "daydeal.ch", "renovero", "brack.ch", "skyscanner", "easyjet", "booking.com", "meteocheck", "scientific american", "ars technica", "national post", "sensecore", "core pro", "| time", "hockey inside/out", "netflix", "wired", "popular science", "habsrus", "flickr", "imdb", "xkcd", "derStandard.at", "amazon", "nhl.com", "20 minuten", "facebook", "reddit", "twitter", "google+", "news", "aktuell", "9gag", "yahoo", "comic", "ebay", "ricardo", "stream", "movie", "cinema", "kino", "tumblr" };
         private static readonly List<string> WorkRelatedBrowsingKeywords = new List<string> { "linkedin", "techready", "powerapps", "angular", "connect", "typescript", "release", "batmon", "calculator", "analytics", "azure", "power bi", "business", "googleearth", "php", "proffix", "centmin", "picturex", "ios", "schmelzmetall", "natur- und tierpark goldau", "tierpark", "amazon web service", "cyon", "salesforce.com", "silverlight", "issue", "junit", "mylyn", "jetbrains", "telerik", "testcomplete", "application lifecycle management", "all reports", "advanced search", ".net", "c#", "java", "vbforums", "dashboard", "virtualbox", "document", "dropbox", "onedrive", "proxy", "jenkins", "databasics", "suite", "abb", "shadowbot", "office", "windows", "namespace", "ventyx", "api", "apache", "oracle", "server", "system", "ibm", "code", "codeplex", "retrospection", "stack overflow", "msdn", "developer", "documentation", "blog", "coding", "programmer" };
 
-        private static readonly List<string> FileNavigationExplorerApps = new List<string> { "explorer" };
+        private static readonly List<string> FileNavigationExplorerApps = new List<string> { "explorer", "speedcommander", "q-dir" };
 
         private static readonly List<string> OtherMusicAppsAndKeywords = new List<string> { "groove", "zune", "itunes", "vlc", "music", "musik", "spotify", "wmplayer", "video", "youtube", "vimeo" };
         private static readonly List<string> OtherRdpApps = new List<string> { "rdcman", "mstsc", "vmconnect", "virtualbox", "vmware", "vpxclient", "msiexec", "pageant", "putty" };
@@ -71,15 +70,19 @@ namespace WindowsActivityTracker.Helpers
             try
             {
                 if (string.IsNullOrEmpty(processName) && string.IsNullOrEmpty(windowName))
+                {
                     return ActivityCategory.Unknown;
+                }
 
-                if (windowName != null) windowName = windowName.ToLower(CultureInfo.InvariantCulture);
-                if (processName != null) processName = processName.ToLower(CultureInfo.InvariantCulture);
+                windowName = windowName?.ToLower();
+                processName = processName?.ToLower();
 
 
                 // all IDLE, will later manually check with more info to find meetings, breaks, etc.
                 if (processName != null && processName.Equals("idle"))
+                {
                     return ActivityCategory.Idle;
+                }
 
                 // check with planning keywords
                 if (IsCategory(ActivityCategory.Planning, processName, windowName))
@@ -99,9 +102,15 @@ namespace WindowsActivityTracker.Helpers
                 // else: manual mapping until no longer mapping possible (then: map to ReadWriteDocument)
                 if (IsEditor(processName))
                 {
-                    if (IsCodeFile(windowName)) return ActivityCategory.DevCode;
-                    if (EditorNotEnoughInfo(windowName)) return ActivityCategory.ReadWriteDocument; // when we don't know
-                    else return ActivityCategory.DevCode; // should be manually coded, default: DevCode ActivityCategory.ManualEditor; // continue manual mapping
+                    if (IsCodeFile(windowName))
+                    {
+                        return ActivityCategory.DevCode;
+                    }
+                    if (EditorNotEnoughInfo(windowName))
+                    {
+                        return ActivityCategory.ReadWriteDocument; // when we don't know
+                    }
+                    return ActivityCategory.DevCode; // should be manually coded, default: DevCode ActivityCategory.ManualEditor; // continue manual mapping
                 }
                 // check with debugging keywords (manual because of manual checking later)
                 if (IsCategory(ActivityCategory.DevDebug, processName, windowName))
@@ -143,11 +152,17 @@ namespace WindowsActivityTracker.Helpers
                 {
                     // map according to keywords and websites
                     if (IsWebsiteWorkRelated(windowName))
+                    {
                         return ActivityCategory.WorkRelatedBrowsing;
+                    }
                     if (IsWebsiteWorkUnrelated(windowName))
+                    {
                         return ActivityCategory.WorkUnrelatedBrowsing;
+                    }
                     if (IsCodeFile(windowName))
+                    {
                         return ActivityCategory.DevCode;
+                    }
 
                     // map remaining (manually)
                     return ActivityCategory.WorkRelatedBrowsing; // should be manually coded, default: work related
@@ -175,7 +190,7 @@ namespace WindowsActivityTracker.Helpers
             }
             catch (Exception e)
             {
-                Console.WriteLine("> ERROR while Mapping: {0}", e.Message);
+                //Console.WriteLine("> ERROR while Mapping: {0}", e.Message);
             }
 
             return ActivityCategory.Unknown;
@@ -194,7 +209,7 @@ namespace WindowsActivityTracker.Helpers
             return EditorApps.Any(processName.ToLower().Contains); // || EditorApps.Any(windowName.Contains);
         }
 
-        internal static bool IsBrowser(string processName)
+        public static bool IsBrowser(string processName)
         {
             return BrowserApps.Any(processName.ToLower().Contains);
         }
