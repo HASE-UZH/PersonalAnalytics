@@ -1,0 +1,36 @@
+﻿<Window x:Class="WindowRecommender.PopupWindow.PopupWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WindowRecommender.PopupWindow"
+             mc:Ignorable="d"
+             Title="WindowDimmer Survey"
+             Height="300" Width="800"
+             MinHeight="200" MinWidth="600"
+             ResizeMode="CanResize">
+    <Window.DataContext>
+        <local:PopupWindowDataContext />
+    </Window.DataContext>
+    <DockPanel Margin="10 10 10 10">
+        <TextBlock DockPanel.Dock="Top" Margin="0 0 0 10" Text="Please select all windows that are currently relevant:" />
+        <StackPanel DockPanel.Dock="Bottom" Margin="0 20 0 0" Orientation="Horizontal" FlowDirection="RightToLeft">
+            <Button Content="Skip" Height="24" Margin="0 0 10 0" Click="SkipClicked" Padding="8 0" />
+            <Button Content="Done" Height="24" Click="SubmitClicked" Padding="8 0" />
+        </StackPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding OpenWindows}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="local:OpenWindowsDataSource">
+                        <CheckBox Margin="0 0 5 10" Height="20" IsChecked="{Binding Relevant}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Margin="0 0 5 0" Source="{Binding Icon}" Height="20" />
+                                <TextBlock Text="{Binding Path=Title}" />
+                            </StackPanel>
+                        </CheckBox>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

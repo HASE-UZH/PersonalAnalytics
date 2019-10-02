@@ -30,6 +30,9 @@ namespace Retrospection
         private bool _defaultPolarTrackerEnabled;
         private bool _defaultFitbitTrackerEnabled;
         private bool _defaultFitbitTokenRemoveEnabled;
+        private bool _defaultWindowRecommenderEnabled;
+        private bool _defaultWindowRecommenderTreatmentMode;
+        private int _defaultWindowRecommenderNumberOfWindows;
 
         public SettingsDto UpdatedSettingsDto;
 
@@ -54,6 +57,9 @@ namespace Retrospection
             _defaultPolarTrackerEnabled = dto.PolarTrackerEnabled.Value;
             _defaultFitbitTrackerEnabled = dto.FitbitTrackerEnabled.Value;
             _defaultFitbitTokenRemoveEnabled = dto.FitbitTokenRevokeEnabled.Value;
+            _defaultWindowRecommenderEnabled = dto.WindowRecommenderEnabled.Value;
+            _defaultWindowRecommenderTreatmentMode = dto.WindowRecommenderTreatmentMode.Value;
+            _defaultWindowRecommenderNumberOfWindows = dto.WindowRecommenderNumberOfWindows.Value;
 
             // no changes yet, disable buttons by default
             SaveButtonsEnabled(false);
@@ -93,7 +99,7 @@ namespace Retrospection
             {
                 CbPopUpInterval.IsEnabled = true;
             }
-            CbPopUpInterval.SelectionChanged += CbPopUpInterval_SelectionChanged;
+            CbPopUpInterval.SelectionChanged += CbSelectionChanged;
 
             PolarEnabled.IsChecked = _defaultPolarTrackerEnabled;
             PolarEnabled.Checked += CbChecked_Update;
@@ -104,6 +110,19 @@ namespace Retrospection
             FitbitEnabled.Unchecked += CbChecked_Update;
 
             FitbitRevoke.IsEnabled = _defaultFitbitTokenRemoveEnabled;
+
+            WindowRecommenderEnabled.IsChecked = _defaultWindowRecommenderEnabled;
+            WindowRecommenderEnabled.Checked += CbChecked_Update;
+            WindowRecommenderEnabled.Unchecked += CbChecked_Update;
+
+            WindowRecommenderTrackingMode.IsChecked = !_defaultWindowRecommenderTreatmentMode;
+            WindowRecommenderTrackingMode.Checked += CbChecked_Update;
+
+            WindowRecommenderTreatmentMode.IsChecked = _defaultWindowRecommenderTreatmentMode;
+            WindowRecommenderTreatmentMode.Checked += CbChecked_Update;
+
+            WindowRecommenderNumberOfWindows.SelectedValue = _defaultWindowRecommenderNumberOfWindows;
+            WindowRecommenderNumberOfWindows.SelectionChanged += CbSelectionChanged;
         }
 
         #region User Changed Values
@@ -119,7 +138,7 @@ namespace Retrospection
             UpdateSettingsChanged();
         }
 
-        private void CbPopUpInterval_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CbSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateSettingsChanged();
         }
@@ -137,7 +156,11 @@ namespace Retrospection
                  || _defaultTimeSpentHideMeetingsWithoutAttendeesEnabled != CbTimeSpentHideMeetingsWithoutAttendeesEnabled.IsChecked.Value
                  || _defaultTimeSpentShowProgramsEnabled != CbTimeSpentShowProgramsEnabled.IsChecked.Value
                  || _defaultPolarTrackerEnabled != PolarEnabled.IsChecked.Value
-                 || _defaultFitbitTrackerEnabled != FitbitEnabled.IsChecked.Value)
+                 || _defaultFitbitTrackerEnabled != FitbitEnabled.IsChecked.Value
+                 || _defaultWindowRecommenderEnabled != WindowRecommenderEnabled.IsChecked.Value
+                 || _defaultWindowRecommenderTreatmentMode != WindowRecommenderTreatmentMode.IsChecked.Value
+                 || _defaultWindowRecommenderNumberOfWindows != int.Parse(WindowRecommenderNumberOfWindows.SelectedValue.ToString())
+                 )
                 {
                     SaveButtonsEnabled(true);
                 }
@@ -225,6 +248,24 @@ namespace Retrospection
                     dto.FitbitTrackerEnabled = FitbitEnabled.IsChecked.Value;
                 }
                 else { dto.FitbitTrackerEnabled = null; }
+
+                if (_defaultWindowRecommenderEnabled != WindowRecommenderEnabled.IsChecked.Value)
+                {
+                    dto.WindowRecommenderEnabled = WindowRecommenderEnabled.IsChecked.Value;
+                }
+                else { dto.WindowRecommenderEnabled = null; }
+
+                if (_defaultWindowRecommenderTreatmentMode != WindowRecommenderTreatmentMode.IsChecked.Value)
+                {
+                    dto.WindowRecommenderTreatmentMode = WindowRecommenderTreatmentMode.IsChecked.Value;
+                }
+                else { dto.WindowRecommenderTreatmentMode = null; }
+
+                if (_defaultWindowRecommenderNumberOfWindows != int.Parse(WindowRecommenderNumberOfWindows.SelectedValue.ToString()))
+                {
+                    dto.WindowRecommenderNumberOfWindows = int.Parse(WindowRecommenderNumberOfWindows.SelectedValue.ToString());
+                }
+                else { dto.WindowRecommenderNumberOfWindows = null; }
             }
             catch { }
 

@@ -1,0 +1,66 @@
+﻿<Window x:Class="WindowRecommender.UploadWindow.UploadWizard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:paColors="clr-namespace:Shared;assembly=Shared"
+        xmlns:local="clr-namespace:WindowRecommender.UploadWindow"
+        mc:Ignorable="d"
+        Title="WindowDimmer: Upload Wizard" 
+        Height="600" Width="900" ResizeMode="NoResize">
+    <Window.DataContext>
+        <local:UploadWindowDataContext />
+    </Window.DataContext>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+    <DockPanel>
+        <Border DockPanel.Dock="Top" Height="40" Background="{x:Static paColors:Settings.RetrospectionColorBrush}" Padding="10 0 0 0">
+            <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" FontSize="16" Foreground="White">Please share the collected data with us</TextBlock>
+        </Border>
+        <StackPanel Margin="10 20 10 0">
+            <TextBlock TextWrapping="Wrap">
+                    We want to thank you again for participating in our study! Your feedback about PersonalAnalytics and your findings help us to improve it in the future. As a next step, we would like to ask you to share the collected data to help us perform additional research.
+            </TextBlock>
+            <TextBlock Margin="0 10 0 0">
+                <Hyperlink Click="RawClicked">View the database file</Hyperlink>
+            </TextBlock>
+            <Border Padding="10" Margin="0 20 0 0" BorderBrush="{x:Static paColors:Settings.RetrospectionColorBrush}" BorderThickness="2" IsEnabled="{Binding Path=Ready}">
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" Margin="0 0 0 10">
+                        Generate an archive with your results that you can share with
+                    </TextBlock>
+                    <CheckBox IsChecked="{Binding Path=IncludeWindowTitles, Mode=TwoWay}">Include Window Titles in shared data. (Window titles are used to determine relations between windows, but can contain a personal information.)</CheckBox>
+                    <CheckBox IsChecked="{Binding Path=IncludeProcessNames, Mode=TwoWay}">Include Process Names in shared data. (Process names only identify the applications used, but do not give information about the content.)</CheckBox>
+                    <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
+                        <Button Height="24" Click="GenerateClicked" Padding="8 0">Generate</Button>
+                        <TextBlock Margin="10 0 0 0" VerticalAlignment="Center" Visibility="{Binding Path=Generating, Converter={StaticResource BooleanToVisibilityConverter} }">
+                            Generating Archive.
+                        </TextBlock>
+                    </StackPanel>
+                    <ProgressBar Margin="0 10 0 0" Height="16" IsIndeterminate="True" Visibility="{Binding Path=Generating, Converter={StaticResource BooleanToVisibilityConverter} }" />
+                </StackPanel>
+            </Border>
+            <Border Padding="10" Margin="0 20 0 0" BorderBrush="{x:Static paColors:Settings.RetrospectionColorBrush}" BorderThickness="2" IsEnabled="{Binding Path=Generated}">
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" Margin="0 0 0 10">
+                        Submit the generated archive
+                    </TextBlock>
+                    <TextBlock Margin="0 0 0 10">
+                        Generated <TextBlock Text="{Binding Path=GeneratedTimestamp}" />
+                    </TextBlock>
+                    <CheckBox IsEnabled="False" IsChecked="{Binding Path=HasWindowTitles}">Includes Window Titles.</CheckBox>
+                    <CheckBox IsEnabled="False" IsChecked="{Binding Path=HasProcessNames}">Includes Process Names.</CheckBox>
+                    <TextBlock Margin="0 10 0 0" Text="{Binding Path=GeneratedFilePath}" />
+                    <TextBlock>
+                        <Hyperlink Click="GeneratedClicked">Open the generated archive</Hyperlink>
+                    </TextBlock>
+                    <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
+                        <Button Height="24" Click="SubmitClicked" Padding="8 0">Create Email</Button>
+                        <Button Height="24" Click="DeleteClicked" Padding="8 0" Margin="10 0 0 0">Delete archive</Button>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </DockPanel>
+</Window>

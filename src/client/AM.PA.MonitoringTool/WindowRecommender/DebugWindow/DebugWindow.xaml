@@ -1,0 +1,51 @@
+﻿<Window x:Class="WindowRecommender.DebugWindow.DebugWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WindowRecommender.DebugWindow"
+             mc:Ignorable="d" 
+             Title="WindowDimmer Debug"
+             Height="536" Width="810">
+    <Window.DataContext>
+        <local:DebugWindowDataContext />
+    </Window.DataContext>
+    <Grid Height="500" Width="800">
+        <ListView HorizontalAlignment="Left" Height="235" VerticalAlignment="Top" Width="382" Margin="10,10,0,0" ItemsSource="{Binding DrawList}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Shown">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="local:DrawListEntryDataSource">
+                                <CheckBox IsChecked="{Binding Show, Mode=OneWay}" IsEnabled="False" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Window" DisplayMemberBinding="{Binding Path=WindowHandle}" />
+                    <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Path=WindowTitle}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView HorizontalAlignment="Left" Height="235" VerticalAlignment="Top" Width="382" Margin="402,10,0,0" ItemsSource="{Binding Scores}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Window" DisplayMemberBinding="{Binding Path=WindowHandle}" />
+                    <GridViewColumn Header="Score" DisplayMemberBinding="{Binding Path=Merged}" />
+                    <GridViewColumn Header="Duration" DisplayMemberBinding="{Binding Path=Duration}" />
+                    <GridViewColumn Header="Frequency" DisplayMemberBinding="{Binding Path=Frequency}" />
+                    <GridViewColumn Header="MRA" DisplayMemberBinding="{Binding Path=MostRecentlyActive}" />
+                    <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Path=TitleSimilarity}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView HorizontalAlignment="Left" Height="235" VerticalAlignment="Top" Width="774" Margin="10,255,0,0" ItemsSource="{Binding Log}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Timestamp" DisplayMemberBinding="{Binding Path=Timestamp}" />
+                    <GridViewColumn Header="Model" DisplayMemberBinding="{Binding Path=Model}" />
+                    <GridViewColumn Header="Message" DisplayMemberBinding="{Binding Path=Message}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

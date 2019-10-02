@@ -36,6 +36,9 @@ namespace Shared.Data
         public bool? FitbitTrackerEnabled { get; set; }
         public bool? FitbitTokenRevokeEnabled { get; set; }
         public bool? FitbitTokenRevoked { get; set; }
+        public bool? WindowRecommenderEnabled { get; set; }
+        public bool? WindowRecommenderTreatmentMode { get; set; }
+        public int? WindowRecommenderNumberOfWindows { get; set; }
     }
     public class StartEndTimeDto
     {

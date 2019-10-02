@@ -42,12 +42,11 @@
     <SuiteName>PersonalAnalytics</SuiteName>
     <MinimumRequiredVersion>0.9.5.5</MinimumRequiredVersion>
     <WebPage>index.html</WebPage>
-    <ApplicationRevision>181</ApplicationRevision>
+    <ApplicationRevision>200</ApplicationRevision>
     <ApplicationVersion>0.9.5.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <!-- <PublisherName>Andre Meyer %28MSR%29</PublisherName> -->
   </PropertyGroup>
   <PropertyGroup>
     <O365ApiClientId>GetFromBuildProcess</O365ApiClientId>
@@ -299,6 +298,10 @@
       <Project>{f4f1afb6-71a9-4ab4-be95-d3c45d3492cc}</Project>
       <Name>UserInputTracker</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WindowRecommender\WindowRecommender.csproj">
+      <Project>{327A5A3C-9626-42F4-9FFC-27D888270CE1}</Project>
+      <Name>WindowRecommender</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WindowsActivityTracker\WindowsActivityTracker.csproj">
       <Project>{2b903556-4dd2-41ce-beac-3ddd045f717d}</Project>
       <Name>WindowsActivityTracker</Name>
@@ -370,7 +373,7 @@
     <WCFMetadataStorage Include="Service References\AccessDataService\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

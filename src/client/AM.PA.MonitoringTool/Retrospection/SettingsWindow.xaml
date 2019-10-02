@@ -21,9 +21,7 @@
         </Grid>
 
         <TabControl Grid.Row="1" Margin="10">
-            <TabItem Height="22"
-                     VerticalAlignment="Top"
-                     Header="Data Tracker Settings">
+            <TabItem Header="Data Tracker Settings">
                 <StackPanel Margin="10">
                     <CheckBox x:Name="CbPopUpsEnabled" Content="Productivity pop-ups enabled" />
                     <TextBlock Margin="20 0 0 0"
@@ -80,6 +78,24 @@
                     <CheckBox x:Name="FitbitEnabled" Margin="0 20 0 0" Content="Fitbit Tracker enabled" />
                     <TextBlock Margin="20 0 0 0" Foreground="Gray" Text="Hint: If enabled, this tracker collects your heart rate, sleep, activity and step data from your Fitbit account." />
                     <Button x:Name="FitbitRevoke" Margin="20 0 0 0" Background="{x:Static paColors:Settings.RetrospectionColorBrush}" Foreground="White" BorderBrush="{x:Static paColors:Settings.RetrospectionColorBrush}" VerticalAlignment="Center" HorizontalAlignment="Left" Click="FitbitRevoke_Click">Revoke Access Token</Button>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="WindowDimmer Settings">
+                <StackPanel Margin="10">
+                    <CheckBox x:Name="WindowRecommenderEnabled" Content="WindowDimmer enabled" />
+                    <TextBlock Margin="20 0 0 0" Foreground="Gray" Text="Hint: This will help you focus on relevant windows by making the remaining ones less visible." />
+
+                    <TextBlock Margin="0 20 0 0" Text="WindowDimmer Mode" />
+                    <RadioButton x:Name="WindowRecommenderTrackingMode" GroupName="WindowRecommenderMode" Content="Tracking only" />
+                    <RadioButton x:Name="WindowRecommenderTreatmentMode" GroupName="WindowRecommenderMode" Content="Tracking and Treatment" />
+
+                    <TextBlock Margin="0 20 0 0" Text="Number of Relevant Windows" />
+                    <ComboBox x:Name="WindowRecommenderNumberOfWindows" Width="200" HorizontalAlignment="Left" SelectedValuePath="Tag">
+                        <ComboBoxItem Tag="2">2 (Active + 1)</ComboBoxItem>
+                        <ComboBoxItem Tag="3">3 (Active + 2)</ComboBoxItem>
+                        <ComboBoxItem Tag="4">4 (Active + 3)</ComboBoxItem>
+                        <ComboBoxItem Tag="5">5 (Active + 4)</ComboBoxItem>
+                    </ComboBox>
                 </StackPanel>
             </TabItem>
         </TabControl>

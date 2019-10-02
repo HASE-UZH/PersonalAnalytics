@@ -1,6 +1,6 @@
 // Created by André Meyer (ameyer@ifi.uzh.ch) from the University of Zurich
 // Created: 2015-10-20
-// 
+//
 // Licensed under the MIT License.
 using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Win32;
@@ -63,6 +63,7 @@ namespace PersonalAnalytics
             Register(new MsOfficeTracker.Daemon());
             Register(new PolarTracker.Deamon());
             Register(new FitbitTracker.Deamon());
+            Register(new WindowRecommender.WindowRecommender());
 
 #if Dev
             //Register(new PeopleVisualizer.PeopleVisualizer()); // disabled, as it's not finished and pretty slow
@@ -70,7 +71,7 @@ namespace PersonalAnalytics
 
 #elif TestPilot1
              // if something is only required in the standard deployment
-            
+
 #endif
 
             return _trackers;
@@ -195,7 +196,7 @@ namespace PersonalAnalytics
         }
 
         /// <summary>
-        /// Sets the current published app version 
+        /// Sets the current published app version
         /// </summary>
         /// <param name="v"></param>
         public void SetAppVersion(string v)
@@ -408,6 +409,11 @@ namespace PersonalAnalytics
                 _taskbarIcon.ContextMenu.Items.Add(m8);
             }
 
+            // Menu Entry to open the WindowDimmer Share Dialog
+            // var m9 = new MenuItem { Header = "Share Results" };
+            // m9.Click += (o, i) => WindowRecommender.WindowRecommender.ShareResults();
+            // _taskbarIcon.ContextMenu.Items.Add(m9);
+
             var m4 = new MenuItem { Header = "Open collected data" };
             m4.Click += (o, i) => OpenDataExportDirectory();
             _taskbarIcon.ContextMenu.Items.Add(m4);
@@ -463,7 +469,7 @@ namespace PersonalAnalytics
                 Continue();
                 item.Header = "Pause " + Dict.ToolName;
             }
-            // pause 
+            // pause
             else
             {
                 Pause();
@@ -635,7 +641,7 @@ namespace PersonalAnalytics
         /// <summary>
         /// Called in a regular interval to try and update the tool.
         /// Asks the user for consent prior to installing the update. In case the installation was successful, the tool will restart.
-        /// 
+        ///
         /// source: https://msdn.microsoft.com/en-us/library/ms404263.aspx
         /// </summary>
         private void UpdateApplicationIfNecessary(object sender, EventArgs e)
@@ -767,7 +773,7 @@ namespace PersonalAnalytics
         private void ShutdownApplication()
         {
             Environment.Exit(0); // this is not clean, otherwise, the httpserver is not shut down and then in some strange inconsistent state
-            //App.Current.Shutdown(); //todo: not sure if this is the right way to do 
+            //App.Current.Shutdown(); //todo: not sure if this is the right way to do
             //Application.Current.Shutdown();
         }
 
